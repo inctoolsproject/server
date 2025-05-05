@@ -12,6 +12,10 @@ const io = new Server(server, {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Signaling server is running");
+});
+
 io.on("connection", socket => {
   console.log("User connected:", socket.id);
 
@@ -32,7 +36,7 @@ io.on("connection", socket => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log("Signaling server running on port", PORT);
 });
