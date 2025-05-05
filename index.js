@@ -11,13 +11,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true
   },
-  transports: ['websocket', 'polling'],
-  allowEIO3: true
-});
-
-// Add basic route
-app.get('/', (req, res) => {
-  res.send('Server is running');
+  transports: ['websocket', 'polling']
 });
 
 io.on("connection", socket => {
