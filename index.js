@@ -1,17 +1,20 @@
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
+app.use(cors());
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "meet.spartanesia.com",
     methods: ["GET", "POST"],
-    credentials: true
+    transports: ['polling', 'websocket']
   },
-  transports: ['websocket', 'polling']
+  allowEIO3: true
 });
 
 io.on("connection", socket => {
@@ -34,8 +37,9 @@ io.on("connection", socket => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 server.listen(PORT, '0.0.0.0', () => {
-  console.log("Signaling server running on port", PORT);
-  console.log("Server dapat diakses di:", process.env.REPL_SLUG + "." + process.env.REPL_OWNER + ".repl.co");
+  const domain = process.env.REPL_SLUG + "." + process.env.REPL_OWNER + ".repl.co";
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Server accessible at: ${domain}`);
 });
